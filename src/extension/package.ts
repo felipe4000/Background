@@ -31,6 +31,7 @@ export type ConfigurationKey =
     "backgroundSize" |
     "backgroundSizeValue" |
     "backgroundChangeTime" |
+    "backgroundTransitionEffect" |
     "autoInstall" |
     "renderContentAboveBackground" |
     "useInvertedOpacity" |
