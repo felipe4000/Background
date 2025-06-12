@@ -33,6 +33,7 @@ import { show as opacityMenu } from "./opacity";
 import { show as repeatMenu } from "./repeat";
 import { show as sizeMenu } from "./size";
 import { show as timeMenu } from "./time";
+import { show as transitionMenu } from "./transition";
 
 const issueUrl: string = `https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURIComponent(`${platform()} ${release()}`)}&vs=${encodeURIComponent(version)}&version=${encodeURIComponent(pkg.version)}`;
 const featureUrl: string = "https://github.com/KatsuteDev/Background/issues/new?template=feature.yml";
@@ -219,6 +220,13 @@ export const backgroundMenu: (ui: UI) => void = (ui: UI) =>
             detail: "Background image size",
             ui,
             handle: () => sizeMenu(ui)
+        }),
+        quickPickItem({
+            label: "$(debug-start) Transition",
+            description: `${get("backgroundTransitionEffect")}`,
+            detail: "Image transition effect",
+            ui,
+            handle: () => transitionMenu(ui)
         }),
         quickPickItem({
             label: "$(clock) Time",

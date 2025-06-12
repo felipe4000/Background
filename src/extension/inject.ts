@@ -54,8 +54,9 @@ const getJavaScript: () => string = () => {
     };
 
     const after: boolean = get("renderContentAboveBackground");
+    const effect: string = get("backgroundTransitionEffect");
 
-    return `(() => {` +
+    return `(() => {const run = () => {` +
 // shared background css
 `
 const bk_global = document.createElement("style");
@@ -71,6 +72,7 @@ bk_global.appendChild(document.createTextNode(\`
     body[panelTransition="true"] .split-view-view > .part.panel::after {
 
         opacity: 0;
+        ${effect === 'Zoom' ? 'transform: scale(1.2);' : ''}
 
     }
 
@@ -93,9 +95,10 @@ bk_global.appendChild(document.createTextNode(\`
 
         pointer-events: none;
 
-        transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out${effect === 'Zoom' ? ', transform 1s ease-in-out' : ''};
 
         image-rendering: ${get("smoothImageRendering") ? "auto" : "pixelated"};
+        ${effect === 'Zoom' ? 'transform: scale(1);' : ''}
 
     }
 \`));
@@ -390,7 +393,13 @@ if(panelTime > 0 && iPanelBackgrounds.length > 1){
     }, panelTime * 1000);
 };
 ` +
-            `})();`;
+            `};
+if(document.readyState === "loading"){
+    window.addEventListener("DOMContentLoaded", run);
+}else{
+    run();
+}
+})();`;
 }
 
 const minifyJavaScript: (javascript: string) => string = (javascript: string) =>
